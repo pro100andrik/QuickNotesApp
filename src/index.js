@@ -4,16 +4,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-const MYNOTES = [
-  {text:'React is cool', rotate:  Math.floor(Math.random() * 4)},
-  {text:'radius = 100mm', rotate:  Math.floor(Math.random() * 4)},
-  {text:"rebeccapurple color", rotate:  Math.floor(Math.random() * 4)}
-];
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App myNotes={MYNOTES} />
+    <App />
   </React.StrictMode>
 );
 

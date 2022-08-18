@@ -4,18 +4,42 @@ import AddButton from './components/AddButton';
 
 import './App.css';
 
+
+const MYNOTES = ["This is notes","Add you own","Or edit existed"];
+
+
+const myStorage = window.localStorage;
+
 class App extends React.Component {
   constructor(props){
     super(props);
+    const notes = [];
+    if (myStorage.length === 0){
+      notes.push(...MYNOTES);
+      myStorage.setItem('notes', notes.join('+-+-+-+'))
+    }else{
+      const localStoreNotes = myStorage.getItem('notes').split('+-+-+-+')
+      notes.push(...localStoreNotes)
+    }
     this.state = ({
-      notes: this.props.myNotes
+      notes: notes.map(element => {
+        return {text: element, rotate: Math.floor(Math.random() * 4)}
+      })
     })
   }
 
   handleRemoveNote = targetIndex => {
     this.setState(prevState => ({
-      notes: prevState.notes.filter((element, index) => index !== targetIndex)
-    }))
+      notes: prevState.notes.filter((_, index) => index !== targetIndex)
+    }), this.updateLocalstore)
+  }
+
+  updateLocalstore = () => {
+    myStorage.clear();
+    const newNotes = this.state.notes.map(element => {
+      return element.text
+    })
+    myStorage.setItem('notes', newNotes.join('+-+-+-+'))
   }
 
   handleEditTextValue = (newText, targetIndex) => {
@@ -24,13 +48,13 @@ class App extends React.Component {
         if (index === targetIndex) element.text = newText;
           return element
       })
-    }))
+    }), this.updateLocalstore)
   }
 
   handleAddNote = () => {
     this.setState({
       notes: [...this.state.notes, {text:'edit me', rotate: Math.floor(Math.random() * 4)}]
-    })
+    }, this.updateLocalstore)
   }
 
   render(){
@@ -49,6 +73,7 @@ class App extends React.Component {
                          handleEditTextValue={this.handleEditTextValue} />
           })}
         </div>
+
 
       </div>
       </>
