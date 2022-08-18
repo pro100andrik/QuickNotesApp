@@ -14,11 +14,11 @@ class App extends React.Component {
   constructor(props){
     super(props);
     const notes = [];
-    if (myStorage.length === 0){
+    if (!myStorage.getItem('quickNotesNotes')){
       notes.push(...MYNOTES);
-      myStorage.setItem('notes', notes.join('+-+-+-+'))
+      myStorage.setItem('quickNotesNotes', notes.join('+-+-+-+'))
     }else{
-      const localStoreNotes = myStorage.getItem('notes').split('+-+-+-+')
+      const localStoreNotes = myStorage.getItem('quickNotesNotes').split('+-+-+-+')
       notes.push(...localStoreNotes)
     }
     this.state = ({
@@ -35,11 +35,10 @@ class App extends React.Component {
   }
 
   updateLocalstore = () => {
-    myStorage.clear();
     const newNotes = this.state.notes.map(element => {
       return element.text
     })
-    myStorage.setItem('notes', newNotes.join('+-+-+-+'))
+    myStorage.setItem('quickNotesNotes', newNotes.join('+-+-+-+'))
   }
 
   handleEditTextValue = (newText, targetIndex) => {
