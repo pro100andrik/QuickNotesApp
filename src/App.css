@@ -14,10 +14,12 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
+  margin: auto;
 
   transform: translate(-50%, -50%);
 
   width: 80%;
+  max-height: 100vh;
 }
 
 .add-button {
@@ -29,6 +31,7 @@ body {
   box-shadow: 0 0 10px 3px #344D90;
   top: 20px;
   left: 20px;
+  z-index: 999;
 }
 
 .add-button:hover {
@@ -127,4 +130,21 @@ img {
 
 .delete-button:hover {
   cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .note {
+    margin: 10px;
+    width: 130px;
+    height: 130px;
+  }
+
+  .note-text{
+    font-size: 70%;
+  }
+
+  .main-container {
+    max-height: 100vh;
+  }
 }
